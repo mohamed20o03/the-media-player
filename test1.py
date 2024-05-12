@@ -1,10 +1,8 @@
 import tkinter as tk
-from tkinter import filedialog, ttk
-from mutagen.mp3 import MP3
-import eyed3
+from tkinter import filedialog
 import pygame
 import os
-
+import eyed3
 
 class MediaPlayer:
     def __init__(self):
@@ -38,6 +36,10 @@ class MediaPlayer:
         stop_button = tk.Button(control_frame, text="Stop", command=self.stop)
         stop_button.pack(side=tk.LEFT)
 
+        # Next button
+        next_button = tk.Button(control_frame, text="Next", command=self.next)
+        next_button.pack(side=tk.LEFT)
+
         # Volume slider
         self.volume_slider = tk.Scale(control_frame, from_=0, to=1, resolution=0.01, orient=tk.HORIZONTAL,
                                       label="Volume", command=self.set_volume)
@@ -55,6 +57,9 @@ class MediaPlayer:
         # Label to display track info
         self.track_info_label = tk.Label(self.root, text="Track Info")
         self.track_info_label.pack(side=tk.TOP, fill=tk.X)
+
+        # Bind the play_selected function to the listbox
+        self.playlist_listbox.bind("<Double-Button-1>", self.play_selected)
 
     def load_files(self):
         # Open file dialog to select audio files
@@ -87,9 +92,23 @@ class MediaPlayer:
         # Stop the current song
         pygame.mixer.music.stop()
 
+    def next(self):
+        # Play the next song in the playlist
+        if self.playlist:
+            self.current_index = (self.current_index + 1) % len(self.playlist)
+            self.play()
+
     def set_volume(self, value):
         # Set the volume
         pygame.mixer.music.set_volume(float(value))
+
+    def play_selected(self, event):
+        # Play the selected song from the playlist
+        selection = self.playlist_listbox.curselection()
+        if selection:
+            index = selection[0]
+            self.current_index = index
+            self.play()
 
     def display_track_info(self, file_path):
         # Use eyed3 to access ID3 tags

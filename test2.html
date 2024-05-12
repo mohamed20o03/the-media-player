@@ -16,9 +16,13 @@
     <button id="pauseButton">Pause</button>
     <button id="prevButton">Previous</button>
     <button id="nextButton">Next</button>
-
+    <br>
+    <label>Volume</label>
     <input type="range" id="volumeSlider" min="0" max="1" step="0.01">
-
+    <br>
+    <label>Speed</label>
+    <input type="range" id="speedRange" min="0.5" max="2" step="0.1" value="1">
+    <br>
     <button id="loadFilesButton">Upload Files</button>
 
     <script>
@@ -27,10 +31,10 @@
             var playlist = document.getElementById('playlist');
             var playButton = document.getElementById('playButton');
             var pauseButton = document.getElementById('pauseButton');
-            var unpauseButton = document.getElementById('unpauseButton');
             var prevButton = document.getElementById('prevButton');
             var nextButton = document.getElementById('nextButton');
             var volumeSlider = document.getElementById('volumeSlider');
+            var speedRange = document.getElementById('speedRange');
             var loadFilesButton = document.getElementById('loadFilesButton');
 
             var playlistItems = [];
@@ -63,7 +67,10 @@
                 audio.pause();
             }
 
-    
+            function unpause() {
+                audio.play();
+            }
+
             function prev() {
                 var currentIndex = playlistItems.indexOf(document.querySelector('.current'));
                 if (currentIndex !== -1) {
@@ -88,6 +95,10 @@
                 audio.volume = parseFloat(value);
             }
 
+            function changeSpeed(speed) {
+                audio.playbackRate = speed;
+            }
+
             playButton.addEventListener('click', play);
             pauseButton.addEventListener('click', pause);
             prevButton.addEventListener('click', prev);
@@ -97,6 +108,12 @@
             });
 
             loadFilesButton.addEventListener('click', loadFiles);
+            speedUpButton.addEventListener('click', function () {
+                changeSpeed(audio.playbackRate + 0.1);
+            });
+            speedDownButton.addEventListener('click', function () {
+                changeSpeed(audio.playbackRate - 0.1);
+            });
         });
     </script>
 </body>
