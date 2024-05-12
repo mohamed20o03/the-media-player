@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Player</title>
+</head>
+<body>
+    <h1>Media Player</h1>
+
+    <div id="playlist"></div>
+
+    <audio id="audio" controls></audio>
+
+    <button id="playButton">Play</button>
+    <button id="pauseButton">Pause</button>
+    <button id="prevButton">Previous</button>
+    <button id="nextButton">Next</button>
+
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.01">
+
+    <button id="loadFilesButton">Upload Files</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var audio = document.getElementById('audio');
+            var playlist = document.getElementById('playlist');
+            var playButton = document.getElementById('playButton');
+            var pauseButton = document.getElementById('pauseButton');
+            var unpauseButton = document.getElementById('unpauseButton');
+            var prevButton = document.getElementById('prevButton');
+            var nextButton = document.getElementById('nextButton');
+            var volumeSlider = document.getElementById('volumeSlider');
+            var loadFilesButton = document.getElementById('loadFilesButton');
+
+            var playlistItems = [];
+
+            function loadFiles() {
+                var input = document.createElement('input');
+                input.type = 'file';
+                input.multiple = true;
+                input.accept = 'audio/mp3';
+                input.addEventListener('change', function () {
+                    Array.from(input.files).forEach(function (file) {
+                        var item = document.createElement('div');
+                        item.textContent = file.name;
+                        item.addEventListener('click', function () {
+                            audio.src = URL.createObjectURL(file);
+                            audio.play();
+                        });
+                        playlist.appendChild(item);
+                        playlistItems.push(item);
+                    });
+                });
+                input.click();
+            }
+
+            function play() {
+                audio.play();
+            }
+
+            function pause() {
+                audio.pause();
+            }
+
+    
+            function prev() {
+                var currentIndex = playlistItems.indexOf(document.querySelector('.current'));
+                if (currentIndex !== -1) {
+                    playlistItems[currentIndex].classList.remove('current');
+                }
+                var prevIndex = (currentIndex - 1 + playlistItems.length) % playlistItems.length;
+                playlistItems[prevIndex].classList.add('current');
+                playlistItems[prevIndex].click();
+            }
+
+            function next() {
+                var currentIndex = playlistItems.indexOf(document.querySelector('.current'));
+                if (currentIndex !== -1) {
+                    playlistItems[currentIndex].classList.remove('current');
+                }
+                var nextIndex = (currentIndex + 1) % playlistItems.length;
+                playlistItems[nextIndex].classList.add('current');
+                playlistItems[nextIndex].click();
+            }
+
+            function setVolume(value) {
+                audio.volume = parseFloat(value);
+            }
+
+            playButton.addEventListener('click', play);
+            pauseButton.addEventListener('click', pause);
+            unpauseButton.addEventListener('click', unpause);
+            prevButton.addEventListener('click', prev);
+            nextButton.addEventListener('click', next);
+            volumeSlider.addEventListener('input', function () {
+                setVolume(volumeSlider.value);
+            });
+
+            loadFilesButton.addEventListener('click', loadFiles);
+        });
+    </script>
+</body>
+</html>
