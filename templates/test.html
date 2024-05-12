@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Music</title>
+</head>
+<body>
+    <h1>Add Music</h1>
+    <input type="file" id="fileInput" multiple style="display: none;">
+    <button onclick="openFileExplorer()">Add Music</button>
+    
+    <script>
+        function openFileExplorer() {
+            document.getElementById('fileInput').click();
+        }
+
+        document.getElementById('fileInput').addEventListener('change', function() {
+            const files = this.files;
+            if (files.length > 0) {
+                const formData = new FormData();
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    formData.append('files', file);
+                }
+                // Send files to Flask server
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Response from server:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
