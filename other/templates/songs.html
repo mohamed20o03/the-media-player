@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <h1>Current Songs</h1>
+    <ol>
+        {% for song in uploaded_files %}
+            <li>Filename: {{ song }}</li>
+        {% endfor %}
+    </ol>
+
+{% endblock %}
