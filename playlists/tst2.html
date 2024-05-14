@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="tst2.css">
+</head>
+
+<body>
+    <ul class='slider'>
+        <!-- Dynamic list items will be added here -->
+    </ul>
+    <nav class='nav'>
+        <ion-icon class='btn prev' name="arrow-back-outline"></ion-icon>
+        <ion-icon class='btn next' name="arrow-forward-outline"></ion-icon>
+    </nav>
+    <div class="addItemButton">
+        <p class="plus"><b>+</b></p>
+    </div>
+    <form class="form" id="formContainer">
+        <label for="img">Image</label>
+        <input type="url" id="img" required placeholder="url">
+        <label for="art">The Artist</label>
+        <input type="text" id="art" required placeholder="The Artist">
+        <button class="cancel">Cancel</button>
+        <button class="submit">Submit</button>
+    </form>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="tst2.js"></script>
+
+    <script>
+        // Function to dynamically add list items
+        function addListItem(imageURL, title) {
+            var slider = document.querySelector('.slider');
+
+            var li = document.createElement('li');
+            li.classList.add('item');
+            li.style.backgroundImage = "url('" + imageURL + "')";
+
+            var div = document.createElement('div');
+            div.classList.add('content');
+
+            var h2 = document.createElement('h2');
+            h2.classList.add('title');
+            h2.innerText = title;
+
+            var button = document.createElement('button');
+            button.innerText = 'Listen';
+
+            div.appendChild(h2);
+            div.appendChild(button);
+            li.appendChild(div);
+
+            slider.appendChild(li);
+        }
+
+        // Add your dynamic list items here
+        addListItem('https://i.pinimg.com/originals/18/62/cf/1862cfbb78564e0f2b441c74edc2b7ce.jpg', 'FAYROUZ');
+        addListItem('https://i.pinimg.com/originals/0a/58/40/0a5840ee342b943dea46f777da6203ff.jpg', 'NAGAT');
+        addListItem('https://i.pinimg.com/originals/57/58/32/57583201f75c9dbf7a752fd6d9ee450e.jpg', 'NOUR ELHODA');
+        addListItem('https://i.pinimg.com/originals/71/bc/6c/71bc6caed1fb255b776997a3070e2f4c.jpg', 'ASMAHAN');
+        addListItem('https://i.pinimg.com/originals/76/20/99/7620994ea342512427b2a862a84079d9.jpg', 'UMM KALTHOM');
+        addListItem('https://i.pinimg.com/originals/38/4b/90/384b90bd995f0a72cec15ed31fc2edec.png', 'ABDELWAHAB');
+        addListItem('https://i.pinimg.com/originals/05/5f/81/055f81039d82e42318ffd3fd22b6af5a.jpg', 'FAYZA');
+
+    </script>
+
+</body>
+
+</html>
