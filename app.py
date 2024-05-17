@@ -100,7 +100,8 @@ def upload():
 @app.route('/audio_list')
 def audio_list():
     songs_list = get_songs()
-    return jsonify(songs_list)
+    return  jsonify(songs_list)
+    
 
 
 
