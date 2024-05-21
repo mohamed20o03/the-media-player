@@ -5,3 +5,9 @@ CREATE TABLE IF NOT EXISTS songs (
     duration NUMERIC NOT NULL,
     song_path TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS playlists(
+    id INTEGER PRIMARY KEY,
+    playlist_cover TEXT NOT NULL,
+    playlist_name TEXT NOT NULL
+);
