@@ -1,10 +1,11 @@
 body {
-    background: #ffeff5;
+    background: #000303;
+    margin: 0;
 }
 
 .logo-container {
     position: absolute;
-    background: #ffeff5;
+    background: #020001;
     width: 1000px;
     height: 1000px;
     left: 50%;
@@ -14,42 +15,51 @@ body {
 
 .behind {
     position: absolute;
-    background: #fff6fb;
+    background: #ecbe98;
     width: 804px;
-    height: 198px;
+    height: 160px;
     left: 50%;
-    top: 40%;
+    top: 41%;
     transform: translate(-50%, -50%);
     border-radius: 15px;
+    transition: top 1s ease;
 }
 
 .player {
     position: absolute;
-    background: #fffeff;
+    background: #71ddb9;
     width: 844px;
     height: 210px;
     left: 50%;
     top: 58%;
     transform: translate(-50%, -50%);
     border-radius: 15px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.568);
+}
+
+.player img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    z-index: 2;
 }
 
 .circle {
     position: absolute;
-    width: 250px;
-    height: 250px;
+    width: 230px;
+    height: 230px;
     left: 13%;
     top: 34%;
     border-radius: 50%;
     overflow: hidden;
     background-color: #ffffff;
-    /* Add a background color */
 }
 
 .circle img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     z-index: 2;
 }
 
@@ -62,15 +72,14 @@ body {
     transform: translate(-50%, -50%);
     border-radius: 50%;
     overflow: hidden;
-    background-color: #ffffff;
-    /* Add a background color */
+    background-color: #ecbe98;
 }
 
 .player__timelineBar {
     background: #E7E7E7;
     width: 460px;
     height: 7px;
-    top: 55%;
+    top: 60%;
     left: 40%;
     border-radius: 15px;
     margin-top: 13px;
@@ -82,13 +91,13 @@ body {
     border-radius: 15px;
     width: 0px;
     height: 7px;
-    background: #fd6d94;
+    background: #000000;
     animation: increaseWidth 10s linear infinite;
     z-index: 2;
 }
 
 .player__author b {
-    color: #fd6d94;
+    color: #000000;
     font-size: 30px;
     font-weight: bold;
     position: relative;
@@ -97,12 +106,12 @@ body {
 }
 
 .dir {
-    color: #a8a5a7;
+    color: #ffffff;
     font-size: 15px;
     font-weight: bold;
     position: relative;
     left: 320px;
-    top: 12px;
+    top: 3px;
 }
 
 .triangle {
@@ -121,13 +130,14 @@ body {
 
 .square {
     position: absolute;
-    background: #E7E7E7;
+    background: #00000000;
     width: 300px;
     height: 125px;
     left: 415px;
     top: 39px;
     border-radius: 15px;
     transition: 1s ease;
+    z-index: 2;
 }
 
 .go {
@@ -142,14 +152,14 @@ body {
 .square:hover {
     transform: scale(1.2);
     background: black;
+}
 
-    .go {
-        color: #E7E7E7;
-    }
+.square:hover .go {
+    color: #E7E7E7;
+}
 
-    .triangle {
-        color: #E7E7E7;
-    }
+.square:hover .triangle {
+    color: #E7E7E7;
 }
 
 @keyframes rotate {
@@ -169,11 +179,9 @@ body {
 @keyframes increaseWidth {
     from {
         width: 0px;
-        /* Starting width of the line */
     }
 
     to {
         width: 470px;
-        /* Ending width of the line */
     }
 }
