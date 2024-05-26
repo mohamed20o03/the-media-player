@@ -1,3 +1,0 @@
-make html temlpete for the website
-make playlist page
-make audio player 

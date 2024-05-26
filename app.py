@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request , jsonify , g
 import os , sqlite3
 from db import SQLiteDB 
+from werkzeug.utils import secure_filename
+
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -8,7 +10,7 @@ app = Flask(__name__, static_url_path='/static')
 
 DATABASE = 'songs.db'
 SCHEMAFILE = "schema.sql"
-UPLOAD_FOLDER = 'static/'
+UPLOAD_FOLDER = 'static/data'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -38,6 +40,48 @@ def playlists():
     return render_template('playlists.html')
 
 
+@app.route('/upload_song', methods=['POST'])
+def upload_song():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+
+    file = request.files['file']
+    playlist_name = request.form.get('playlist_name')
+    file_name = request.form.get('file_name', file.filename)
+
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    if file and playlist_name:
+        filename = secure_filename(file_name)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(file_path)
+
+    if 'audio' in file.content_type:
+        file_type = 'audio'
+    else:
+        file_type = 'video'
+   
+    db = get_db()
+    playlist_id = str( db.fetch_one("SELECT id FROM playlists WHERE playlist_name = ?", (playlist_name,)) )
+    print(type(playlist_id))
+    db.execute_query("INSERT INTO songs (song_name, song_path, playlist_id , file_type) VALUES (?, ?, ?, ?)",(filename,file_path,playlist_id,file_type))          
+    return "true"
+
+@app.route('/playlists/<playlist_name>', methods=['GET'])
+def playlist_page(playlist_name):
+    return render_template('playlist.html' , playlist_name = playlist_name)
+
+@app.route('/playlist/<playlist_name>')
+def playlist_by_name(playlist_name):
+    db = get_db()
+
+    playlist_id = str ( db.fetch_one("SELECT id FROM playlists WHERE playlist_name = ?", (playlist_name,)) )
+
+    songs = db.fetch_all("SELECT song_name, song_path, file_type FROM songs WHERE playlist_id = ?",(playlist_id,))
+    return jsonify(songs)
+
+
 @app.route('/get_playlists', methods=['GET'])
 def get_playlists():
     db = get_db()
@@ -65,16 +109,6 @@ def add_playlist():
     
     new_playlist = [ playlist_cover_path , playlist_name]
     return jsonify(new_playlist)
-
-
-
-
-@app.route('/audio_list')
-def audio_list():
-    pass
-    
-
-
 
 
 if __name__ == '__main__':

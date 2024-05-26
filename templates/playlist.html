@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Player</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/playlist.css') }}">
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script>
+        var playlist_name = '{{ playlist_name }}';
+       
+        console.log(playlist_name);
+        
+    </script>
+</head>
+
+<body>
+
+    <div id="playlist"></div>
+
+    <div class="container">
+        <video id="media" class="video" controls></video>
+        <div id="waveform"></div>
+        <div class="audio-controls">
+            <button id="playButton">Play</button>
+            <button id="pauseButton">Pause</button>
+            <button id="prevButton">Previous</button>
+            <button id="nextButton">Next</button>
+            <div class="volume-control">
+                <label for="volumeRange" class="vol">Volume</label>
+                <input type="range" id="volumeRange" min="0" max="1" step="0.01" value="1">
+            </div>
+            <div class="sp">
+                <label>Speed: <span id="speedValue">1.0</span></label>
+                <button id="speedUpButton">Speed Up</button>
+                <button id="speedDownButton">Speed Down</button>
+            </div>
+        </div>
+        <button id="openUploadPopup" class="load">Upload File</button>
+    </div>
+
+    <form id="uploadPopup" enctype="multipart/form-data" class="popup">
+        <div class="popup-content">
+            <span class="close" id="closeUploadPopup">&times;</span>
+            <input type="file" id="fileInput" name="file" accept="audio/*,video/*" required>
+            <input type="text" id="fileNameInput" name="file_name" placeholder="File Name" required>
+            <button type="submit" id="uploadButton">Upload</button>
+            <button type="button" id="cancelUploadButton" class="cancel">Cancel</button>
+        </div>
+    </form>
+
+    <script src="{{ url_for('static', filename='js/playlist.js') }}"></script>
+</body>
+
+</html>

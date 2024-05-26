@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="static/playlists.css">
+    <link rel="stylesheet" type="text/css" href="static/css/playlists.css">  
 </head>
 
 <body>
@@ -34,7 +34,7 @@
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="static/playlists.js"></script>
+    <script src="static/js/playlists.js"></script>
 
     <script>
          document.addEventListener('DOMContentLoaded', function() {
@@ -74,9 +74,7 @@
             let li = document.createElement('li');
             li.classList.add('item');
 
-         
             li.style.backgroundImage = `url('${imageURL}')`;
-
 
             let div = document.createElement('div');
             div.classList.add('content');
@@ -87,6 +85,12 @@
 
             let button = document.createElement('button');
             button.innerText = 'Listen';
+
+            // Add event listener to the button
+            button.addEventListener('click', function() {
+                // Redirect to the playlist URL
+                window.location.href = `/playlists/${title}`;
+            });
 
             div.appendChild(h2);
             div.appendChild(button);
