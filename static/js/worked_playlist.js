@@ -222,14 +222,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function updateCurrentSong(currentItem) {
-        playlistItems.forEach(function (item) {
-            item.classList.remove('current');
-        });
-        currentItem.classList.add('current');
-        currentItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
     // Function to play the previous item in the playlist
     function prev() {
         var currentIndex = playlistItems.findIndex(item => item.classList.contains('current'));

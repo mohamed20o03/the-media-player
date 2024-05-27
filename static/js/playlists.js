@@ -15,6 +15,8 @@ const toggleFormButton = document.querySelector('.addItemButton');
 const formContainer = document.getElementById('formContainer');
 const cancelButton = document.querySelector('.cancel');
 
+formContainer.style.display = 'none';
+
 // Function to hide the form
 function hideForm() {
     formContainer.style.display = 'none';

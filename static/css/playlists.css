@@ -54,12 +54,14 @@ main {
         height: 55%;
         width: 19%;
         border-radius: 5%;
+        z-index: 100;
     }
 
     &:nth-child(4) {
         left: calc(50% + 220px);
         opacity: 1;
         border-radius: 5%;
+        z-index: 80;
     }
 
     &:nth-child(5) {
@@ -68,6 +70,7 @@ main {
         width: 5%;
         opacity: 1;
         border-radius: 5%;
+        z-index: 70;
     }
 
     &:nth-child(6) {
@@ -76,6 +79,7 @@ main {
         height: 8%;
         width: 3%;
         border-radius: 5%;
+        z-index: 60;
     }
 }
 
@@ -235,7 +239,11 @@ main {
     /* Change the color here */
 }
 
-.form input[type="url"],
+.form input[type="file"] {
+    position: relative;
+    margin-left: 47px;
+}
+
 .form input[type="text"] {
     position: relative;
     width: 80%;
@@ -264,6 +272,7 @@ main {
     background-color: #ffffff;
     color: #000000;
     font-weight: bold;
+    margin-left: 30px;
     transition: transform 0.3s ease;
 }
 
@@ -271,7 +280,7 @@ main {
     background-color: #0098c7;
     color: #fff;
     font-weight: bold;
-    margin-left: 50px;
+    margin-left: 13px;
     transition: transform 0.3s ease;
 }
 

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="static/css/playlists.css">  
+    <link rel="stylesheet" type="text/css" href="static/css/playlists.css">
 </head>
 
 <body>
@@ -20,51 +20,59 @@
         <p class="plus"><b>+</b></p>
     </div>
 
-    <form class="form" id="formContainer" action="/add_playlist" method="POST" enctype="multipart/form-data">
+    <form class="form" id="formContainer" action="/add_playlist" method="POST" enctype="multipart/form-data"
+        style="display:block">
         <label for="playlistCover">Playlist Cover</label>
         <input type="file" id="playlistCover" name="playlistCover" required>
-        
+
         <label for="playlist_name">Playlist Name</label>
         <input type="text" id="playlist_name" name="playlist_name" required>
-        
+
         <button type="submit" class="submit">Submit</button>
-        <button type="button" class="cancel" onclick="document.getElementById('formContainer').style.display='none';">Cancel</button>
+        <button type="button" class="cancel">Cancel</button>
     </form>
-    
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="static/js/playlists.js"></script>
 
     <script>
-         document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+            // Fetch existing playlists on load
             fetch('/get_playlists')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(playlist => {
-                    addListItem(playlist[0], playlist[1]);
-                });
-            })
-            .catch(error => console.error('Error fetching playlists:', error));
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(playlist => {
+                        addListItem(playlist[0], playlist[1]);
+                    });
+                })
+                .catch(error => console.error('Error fetching playlists:', error));
 
-            document.querySelector('#formContainer').addEventListener('submit', function(event) {
+            // Handle form submission
+            document.querySelector('#formContainer').addEventListener('submit', function (event) {
                 event.preventDefault();
 
-            let formData = new FormData(this);
+                let formData = new FormData(this);
 
                 fetch('/add_playlist', {
                     method: 'POST',
                     body: formData
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        alert(data.error);
-                    } else {
-                        addListItem(data[0], data[1]);
-                    }
-                })
-                .catch(error => console.error('Error adding playlist:', error));
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                        } else {
+                            addListItem(data[0], data[1]);
+                            clearFormAndHide();
+                        }
+                    })
+                    .catch(error => console.error('Error adding playlist:', error));
+            });
+
+            // Handle form cancel button click
+            document.querySelector('.cancel').addEventListener('click', function () {
+                clearFormAndHide();
             });
         });
 
@@ -73,7 +81,6 @@
 
             let li = document.createElement('li');
             li.classList.add('item');
-
             li.style.backgroundImage = `url('${imageURL}')`;
 
             let div = document.createElement('div');
@@ -87,22 +94,22 @@
             button.innerText = 'Listen';
 
             // Add event listener to the button
-            button.addEventListener('click', function() {
-                // Redirect to the playlist URL
+            button.addEventListener('click', function () {
                 window.location.href = `/playlists/${title}`;
             });
 
             div.appendChild(h2);
             div.appendChild(button);
             li.appendChild(div);
-
             slider.appendChild(li);
         }
 
-       
-
+        function clearFormAndHide() {
+            let form = document.getElementById('formContainer');
+            form.reset();
+            form.style.display = 'none';
+        }
     </script>
-
 </body>
 
 </html>
